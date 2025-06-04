@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Surprise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    
+    @font-face {
+      font-family: 'HSN Naskh Farisi';
+      src: url('arfonts-hsn-naskh-farisi.ttf') format('truetype');
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background:
+        linear-gradient(135deg, #f8f3fb, #a558ec),
+        url('bg.png'); /* flower image */
+      background-repeat: no-repeat, no-repeat;
+      background-position: top center, bottom center;
+      background-size: cover, 100% 200px;
+      background-attachment: scroll, scroll;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .falling-sakura {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .sakura {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('sakura.png');
+      background-size: cover;
+      animation: fall linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10%) rotate(0deg);
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    .container {
+      position: relative;
+      width: 400px;
+      height: 300px;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .envelope-label {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'HSN Naskh Farisi', 'Great Vibes', cursive;
+      font-size: 2.5em;
+      color: #660ba3;
+      z-index: 4;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .container.open .envelope-label {
+      opacity: 0;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      background: #a26acb;
+      top: 0;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform 1s ease;
+      transform-origin: top;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .envelope-body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #caa5f5;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      border-radius: 8px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('flow3.png');
+      background-size: 400px 200px;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 12px;
+    }
+
+    .card {
+      position: absolute;
+      width: 90%;
+      height: 80%;
+      background-color: rgba(255, 255, 255, 0.9);
+      top: 100%;
+      left: 5%;
+      border-radius: 12px;
+      padding: 30px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      opacity: 0;
+      transition: top 1s ease 0.5s, opacity 1s ease 0.5s;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container.open .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    .container.open .card {
+      top: 10%;
+      opacity: 1;
+    }
+
+    h1 {
+      font-family: 'HSN Naskh Farisi', 'Great Vibes', cursive;
+      color: #8e44ad;
+      font-size: 2.5em;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1.1em;
+      color: #63057c;
+      margin-bottom: 20px;
+      font-size: 25px;
+    }
+
+    .signature {
+      font-style: italic;
+      color: #63057c;
+    }
+
+    .open-btn {
+      margin-top: 30px;
+      background: #9b59b6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    /* Optional: Adjust for very small screens */
+    @media (max-width: 600px) {
+  .container {
+    width: 80vw;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin: 4vh auto;
+  }
+
+  .envelope-label {
+    font-size: 7vw;
+    top: 60%;
+  }
+
+  .open-btn {
+    font-size: 5vw;
+    padding: 3vw 5vw;
+  }
+
+  h1 {
+    font-size: 8vw;
+  }
+
+  p {
+    font-size: 5vw;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <audio id="bg-music" src="elden.mp3" preload="auto"></audio>
+  <div class="falling-sakura" id="sakuraContainer"></div>
+  <div class="container" id="envelopeContainer">
+    <div class="envelope-label" id="envelopeLabel">الى الاميرة</div>
+    <div class="envelope-flap"></div>
+    <div class="envelope-body"></div>
+    <div class="card">
+      <h1>نورة</h1>
+      <p>كل عام و انتي بخير</p>
+      <p class="signature">اسمعي احلى اهداء</p>
+    </div>
+  </div>
+  <button class="open-btn" onclick="openEnvelope()">افتح الظرف</button>
+
+  <script>
+    function openEnvelope() {
+      document.getElementById('envelopeContainer').classList.add('open');
+      generateSakura();
+      document.getElementById('bg-music').play();
+    }
+
+    function generateSakura() {
+      const container = document.getElementById('sakuraContainer');
+      for (let i = 0; i < 30; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('sakura');
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = (5 + Math.random() * 5) + 's';
+        petal.style.animationDelay = Math.random() * 3 + 's';
+        container.appendChild(petal);
+      }
+    }
+  </script>
+</body>
+</html>
